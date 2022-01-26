@@ -1,0 +1,6 @@
+Test-String: 'test'
+Test-Boolean: true
+Test-Number: 57
+Test-List:
+  - 'test1'
+  - 'test2'
