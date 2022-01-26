@@ -1,0 +1,6 @@
+# Excluding user specific idea settings
+.idea/*
+# Excluding idea generated files
+*.iml
+# Excluded the target folder from maven modules
+*/target/*
