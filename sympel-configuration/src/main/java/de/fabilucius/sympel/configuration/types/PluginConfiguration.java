@@ -24,7 +24,7 @@ public class PluginConfiguration extends AbstractConfiguration {
     private final File file;
     private final FileConfiguration configuration;
 
-    private PluginConfiguration(@NotNull Plugin plugin, @NotNull String filePathInJar) {
+    protected PluginConfiguration(@NotNull Plugin plugin, @NotNull String filePathInJar) {
         this.file = new File(plugin.getDataFolder(), filePathInJar);
         this.configuration = new YamlConfiguration();
         this.createFileDirectory();
@@ -39,7 +39,7 @@ public class PluginConfiguration extends AbstractConfiguration {
     }
 
     private void extractConfigurationFileFromJar(String fileJarPath) {
-        URL resourceUrl = this.getClass().getResource(fileJarPath);
+        URL resourceUrl = this.getClass().getClassLoader().getResource(fileJarPath);
         Preconditions.checkNotNull(resourceUrl, "resource url cannot be null(missing resource or wrong file path).");
         /* Extracting file from jar */
         if (!this.getFile().exists()) {
