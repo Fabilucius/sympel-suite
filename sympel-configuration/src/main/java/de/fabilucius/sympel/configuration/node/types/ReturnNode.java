@@ -28,7 +28,7 @@ public class ReturnNode implements Node {
 
     @Nullable
     public <T> T getAs(Class<T> returnClass) {
-        return returnClass.cast(this.getFileConfiguration().get(this.getConfigKey(), returnClass));
+        return returnClass.cast(this.getFileConfiguration().get(this.getConfigKey()));
     }
 
     /* the getter and setter of the class */
