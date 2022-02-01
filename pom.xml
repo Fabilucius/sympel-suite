@@ -12,6 +12,7 @@
         <module>sympel-configuration</module>
         <module>sympel-multiversion</module>
         <module>sympel-item</module>
+        <module>sympel-command</module>
     </modules>
 
     <!-- Global variables for all the modules -->
