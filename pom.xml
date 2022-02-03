@@ -13,6 +13,7 @@
         <module>sympel-multiversion</module>
         <module>sympel-item</module>
         <module>sympel-command</module>
+        <module>sympel-database</module>
     </modules>
 
     <!-- Global variables for all the modules -->
