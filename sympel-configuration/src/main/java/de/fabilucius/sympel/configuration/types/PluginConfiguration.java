@@ -3,7 +3,6 @@ package de.fabilucius.sympel.configuration.types;
 import com.google.common.base.Preconditions;
 import de.fabilucius.sympel.configuration.AbstractConfiguration;
 import de.fabilucius.sympel.configuration.logging.ConfigurationLogger;
-import org.apache.commons.io.FileUtils;
 import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -13,6 +12,8 @@ import org.jetbrains.annotations.NotNull;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import java.nio.file.Files;
+import java.nio.file.StandardCopyOption;
 import java.util.logging.Level;
 
 public class PluginConfiguration extends AbstractConfiguration {
@@ -44,7 +45,7 @@ public class PluginConfiguration extends AbstractConfiguration {
         /* Extracting file from jar */
         if (!this.getFile().exists()) {
             try {
-                FileUtils.copyURLToFile(resourceUrl, this.getFile());
+                Files.copy(resourceUrl.openStream(), this.getFile().toPath(), StandardCopyOption.REPLACE_EXISTING);
             } catch (IOException ioException) {
                 ConfigurationLogger.log(Level.SEVERE, "An error " +
                         "occurred while extracting a file from inside a jar:", ioException);
