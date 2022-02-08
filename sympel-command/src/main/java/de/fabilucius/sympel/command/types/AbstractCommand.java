@@ -26,8 +26,9 @@ public abstract class AbstractCommand implements Command, CommandExecutor, TabCo
     private static final Logger LOGGER = Bukkit.getLogger();
 
     private final List<AbstractSubCommand> subCommands = Lists.newArrayList();
-    private String identifier;
-    private String permission;
+    private String noPermissionMessage = "you need to overwrite this method to change it";
+    private final String identifier;
+    private final String permission;
 
     protected AbstractCommand() {
         Preconditions.checkState(this.getClass().isAnnotationPresent(Details.class),
@@ -108,7 +109,11 @@ public abstract class AbstractCommand implements Command, CommandExecutor, TabCo
     /* the getter and setter of the class */
 
     public String getNoPermissionMessage() {
-        return "you need to overwrite this method to change it";
+        return noPermissionMessage;
+    }
+
+    public void setNoPermissionMessage(String noPermissionMessage) {
+        this.noPermissionMessage = noPermissionMessage;
     }
 
     public List<AbstractSubCommand> getSubCommands() {
