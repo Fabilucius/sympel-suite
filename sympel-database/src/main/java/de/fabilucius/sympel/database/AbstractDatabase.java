@@ -151,7 +151,7 @@ public class AbstractDatabase implements Database {
     @Override
     public final void insertOrUpdateQuery(String table, List<String> columnsToInsert, List<String> valuesToInsert, String whereLogic, String updateLogic) {
         this.ensureConnectionIntegrity();
-        if (this.valueExistQuery(table, "")) {
+        if (this.valueExistQuery(table, whereLogic)) {
             this.updateQuery(table, updateLogic, whereLogic);
         } else {
             this.insertQuery(table, columnsToInsert, valuesToInsert);
