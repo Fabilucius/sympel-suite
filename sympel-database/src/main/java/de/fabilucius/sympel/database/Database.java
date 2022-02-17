@@ -23,4 +23,6 @@ public interface Database {
 
     void insertOrUpdateQuery(String table, List<String> columnsToInsert, List<String> valuesToInsert, String whereLogic, String updateLogic);
 
+    void deleteQuery(String table, String whereLogic);
+
 }

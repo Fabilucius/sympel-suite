@@ -159,6 +159,21 @@ public class AbstractDatabase implements Database {
     }
 
     @Override
+    public void deleteQuery(String table, String whereLogic) {
+        Preconditions.checkState(!Strings.isNullOrEmpty(table), "table cannot be null or empty");
+        Preconditions.checkNotNull(whereLogic, "whereLogic cannot be null");
+        this.ensureConnectionIntegrity();
+        String deleteQuery = "DELETE FROM " + table + " WHERE " + whereLogic;
+        try {
+            PreparedStatement preparedStatement = this.getConnection().prepareStatement(deleteQuery);
+            preparedStatement.executeUpdate();
+        } catch (SQLException sqlException) {
+            LOGGER.log(Level.WARNING, "Couldn't execute the following delete query:"
+                    + System.lineSeparator() + deleteQuery, sqlException);
+        }
+    }
+
+    @Override
     public void closeConnection() {
         try {
             this.getConnection().close();
