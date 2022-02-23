@@ -1,0 +1,7 @@
+name: SympelCommand
+version: ${project.version}
+main: de.fabilucius.sympel.command.SympelCommand
+description: This plugin provides a clean way of creating custom commands in a nice and tidy api, its part of the sympel-suite, for more infos visit https://www.sympel-suite.fabilucius.de/.
+author: Fabian Bullik
+website: https://www.sympel-command.fabilucius.de/
+load: STARTUP

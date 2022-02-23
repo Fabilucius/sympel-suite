@@ -1,10 +1,13 @@
-package de.fabilucius.sympel.command;
+package de.fabilucius.sympel.command.utilities;
 
 import org.bukkit.command.CommandSender;
 
 import java.util.List;
 
-public interface Command {
+/**
+ * A command entity is any form of command that can be run be it a command itself or one of its subcommands.
+ */
+public interface CommandEntity {
 
     /**
      * This method will be forwarded by the bukkit default's onCommand and simplifies the arguments to only include the useful.
