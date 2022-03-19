@@ -20,6 +20,8 @@ public abstract class AbstractCommand implements CommandEntity, CommandExecutor,
 
     private static final Logger LOGGER = Bukkit.getLogger();
 
+    private final PluginCommand pluginCommand;
+
     /**
      * The list of {@link AbstractSubCommand} that are related to this command.
      * This list can also be empty.
@@ -34,20 +36,20 @@ public abstract class AbstractCommand implements CommandEntity, CommandExecutor,
     public AbstractCommand(String commandIdentifier) {
         this.identifier = commandIdentifier;
 
-        PluginCommand pluginCommand = Bukkit.getPluginCommand(this.identifier);
+        this.pluginCommand = Bukkit.getPluginCommand(this.identifier);
         if (pluginCommand == null) {
             throw new CommandInitializationException(String.format("Cannot create an instance of %s, %s seems to be missing inside the plugin.yml.",
                     this.getClass().getName(), this.identifier));
         }
 
-        pluginCommand.setExecutor(this);
-        pluginCommand.setTabCompleter(this);
+        this.pluginCommand.setExecutor(this);
+        this.pluginCommand.setTabCompleter(this);
         /* Filling in the metadata of the bukkit command instance */
-        this.getAliases().ifPresent(pluginCommand::setAliases);
-        this.getNoPermissionMessage().ifPresent(pluginCommand::setPermissionMessage);
-        this.getPermission().ifPresent(pluginCommand::setPermission);
-        this.getDescription().ifPresent(pluginCommand::setDescription);
-        this.getUsage().ifPresent(pluginCommand::setUsage);
+        this.getAliases().ifPresent(this.pluginCommand::setAliases);
+        this.getNoPermissionMessage().ifPresent(this.pluginCommand::setPermissionMessage);
+        this.getPermission().ifPresent(this.pluginCommand::setPermission);
+        this.getDescription().ifPresent(this.pluginCommand::setDescription);
+        this.getUsage().ifPresent(this.pluginCommand::setUsage);
 
         /* Registering the subcommands of the command if any are present */
         this.registerSubCommands();
@@ -148,11 +150,20 @@ public abstract class AbstractCommand implements CommandEntity, CommandExecutor,
     }
 
     @NotNull
+    public final PluginCommand getPluginCommand() {
+        return pluginCommand;
+    }
+
+    @NotNull
     public final Optional<String> getDescription() {
         if (this.getClass().isAnnotationPresent(Description.class)) {
             return Optional.of(this.getClass().getAnnotation(Description.class).description());
         }
         return Optional.empty();
+    }
+
+    public final void setDescription(String description) {
+        this.pluginCommand.setDescription(description);
     }
 
     @NotNull
@@ -163,12 +174,20 @@ public abstract class AbstractCommand implements CommandEntity, CommandExecutor,
         return Optional.empty();
     }
 
+    public final void setAliases(List<String> aliases) {
+        this.pluginCommand.setAliases(aliases);
+    }
+
     @NotNull
     public final Optional<String> getNoPermissionMessage() {
         if (this.getClass().isAnnotationPresent(NoPermissionMessage.class)) {
             return Optional.of(this.getClass().getAnnotation(NoPermissionMessage.class).message());
         }
         return Optional.empty();
+    }
+
+    public final void setNoPermissionMessage(String noPermissionMessage) {
+        this.pluginCommand.setPermissionMessage(noPermissionMessage);
     }
 
     @NotNull
@@ -179,12 +198,20 @@ public abstract class AbstractCommand implements CommandEntity, CommandExecutor,
         return Optional.empty();
     }
 
+    public final void setPermission(String permission) {
+        this.pluginCommand.setPermission(permission);
+    }
+
     @NotNull
     public final Optional<String> getUsage() {
         if (this.getClass().isAnnotationPresent(Usage.class)) {
             return Optional.of(this.getClass().getAnnotation(Usage.class).usage());
         }
         return Optional.empty();
+    }
+
+    public final void setUsage(String usage) {
+        this.pluginCommand.setUsage(usage);
     }
 
 }
