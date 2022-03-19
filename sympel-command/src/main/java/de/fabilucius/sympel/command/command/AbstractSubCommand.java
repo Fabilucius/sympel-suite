@@ -41,7 +41,7 @@ public abstract class AbstractSubCommand implements CommandEntity {
             return Optional.of(this.aliases);
         }
         if (this.getClass().isAnnotationPresent(Aliases.class)) {
-            return Optional.of(Lists.newArrayList(this.getClass().getAnnotation(Aliases.class).aliases()));
+            return Optional.of(Lists.newArrayList(this.getClass().getAnnotation(Aliases.class).value()));
         }
         return Optional.empty();
     }
@@ -56,7 +56,7 @@ public abstract class AbstractSubCommand implements CommandEntity {
             return Optional.of(this.noPermissionMessage);
         }
         if (this.getClass().isAnnotationPresent(NoPermissionMessage.class)) {
-            return Optional.of(this.getClass().getAnnotation(NoPermissionMessage.class).message());
+            return Optional.of(this.getClass().getAnnotation(NoPermissionMessage.class).value());
         }
         return Optional.empty();
     }
@@ -71,7 +71,7 @@ public abstract class AbstractSubCommand implements CommandEntity {
             return Optional.of(this.permission);
         }
         if (this.getClass().isAnnotationPresent(Permission.class)) {
-            return Optional.of(this.getClass().getAnnotation(Permission.class).permission());
+            return Optional.of(this.getClass().getAnnotation(Permission.class).value());
         }
         return Optional.empty();
     }

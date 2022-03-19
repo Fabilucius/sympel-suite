@@ -17,6 +17,6 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 public @interface SubCommands {
 
-    Class<? extends AbstractSubCommand>[] subCommands();
+    Class<? extends AbstractSubCommand>[] value();
 
 }

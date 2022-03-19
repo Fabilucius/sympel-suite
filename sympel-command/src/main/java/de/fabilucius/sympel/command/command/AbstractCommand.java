@@ -108,7 +108,7 @@ public abstract class AbstractCommand implements CommandEntity, CommandExecutor,
     private void registerSubCommands() {
         if (this.getClass().isAnnotationPresent(SubCommands.class)) {
             List<String> aliases = Lists.newArrayList();
-            Arrays.stream(this.getClass().getAnnotation(SubCommands.class).subCommands()).forEach(subCommandClass -> {
+            Arrays.stream(this.getClass().getAnnotation(SubCommands.class).value()).forEach(subCommandClass -> {
                 try {
                     AbstractSubCommand abstractSubCommand = subCommandClass.getConstructor().newInstance();
                     if (aliases.contains(abstractSubCommand.getIdentifier()) || (abstractSubCommand.getAliases().isPresent() && !Collections.disjoint(aliases, abstractSubCommand.getAliases().get()))) {
@@ -150,6 +150,11 @@ public abstract class AbstractCommand implements CommandEntity, CommandExecutor,
     }
 
     @NotNull
+    public List<AbstractSubCommand> getSubCommands() {
+        return abstractSubCommands;
+    }
+
+    @NotNull
     public final PluginCommand getPluginCommand() {
         return pluginCommand;
     }
@@ -157,7 +162,7 @@ public abstract class AbstractCommand implements CommandEntity, CommandExecutor,
     @NotNull
     public final Optional<String> getDescription() {
         if (this.getClass().isAnnotationPresent(Description.class)) {
-            return Optional.of(this.getClass().getAnnotation(Description.class).description());
+            return Optional.of(this.getClass().getAnnotation(Description.class).value());
         }
         return Optional.empty();
     }
@@ -169,7 +174,7 @@ public abstract class AbstractCommand implements CommandEntity, CommandExecutor,
     @NotNull
     public final Optional<List<String>> getAliases() {
         if (this.getClass().isAnnotationPresent(Aliases.class)) {
-            return Optional.of(Lists.newArrayList(this.getClass().getAnnotation(Aliases.class).aliases()));
+            return Optional.of(Lists.newArrayList(this.getClass().getAnnotation(Aliases.class).value()));
         }
         return Optional.empty();
     }
@@ -181,7 +186,7 @@ public abstract class AbstractCommand implements CommandEntity, CommandExecutor,
     @NotNull
     public final Optional<String> getNoPermissionMessage() {
         if (this.getClass().isAnnotationPresent(NoPermissionMessage.class)) {
-            return Optional.of(this.getClass().getAnnotation(NoPermissionMessage.class).message());
+            return Optional.of(this.getClass().getAnnotation(NoPermissionMessage.class).value());
         }
         return Optional.empty();
     }
@@ -193,7 +198,7 @@ public abstract class AbstractCommand implements CommandEntity, CommandExecutor,
     @NotNull
     public final Optional<String> getPermission() {
         if (this.getClass().isAnnotationPresent(Permission.class)) {
-            return Optional.of(this.getClass().getAnnotation(Permission.class).permission());
+            return Optional.of(this.getClass().getAnnotation(Permission.class).value());
         }
         return Optional.empty();
     }
@@ -205,7 +210,7 @@ public abstract class AbstractCommand implements CommandEntity, CommandExecutor,
     @NotNull
     public final Optional<String> getUsage() {
         if (this.getClass().isAnnotationPresent(Usage.class)) {
-            return Optional.of(this.getClass().getAnnotation(Usage.class).usage());
+            return Optional.of(this.getClass().getAnnotation(Usage.class).value());
         }
         return Optional.empty();
     }
