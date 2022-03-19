@@ -5,8 +5,10 @@ import com.google.common.collect.Lists;
 import de.fabilucius.sympel.item.builder.ItemBuilder;
 import de.fabilucius.sympel.item.external.XMaterial;
 import org.bukkit.Material;
+import org.bukkit.NamespacedKey;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.persistence.PersistentDataType;
 
 import java.util.List;
 import java.util.Optional;
@@ -80,6 +82,11 @@ public class ItemStackBuilder implements ItemBuilder {
 
     public ItemStackBuilder setUnbreakable(boolean unbreakable) {
         this.getItemMeta().setUnbreakable(unbreakable);
+        return this;
+    }
+
+    public <T, Z> ItemStackBuilder addPersistentData(NamespacedKey key, PersistentDataType<T, Z> persistentDataType, Z value) {
+        this.getItemMeta().getPersistentDataContainer().set(key, persistentDataType, value);
         return this;
     }
 
