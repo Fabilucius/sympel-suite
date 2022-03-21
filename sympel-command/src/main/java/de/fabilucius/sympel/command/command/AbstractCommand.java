@@ -88,10 +88,8 @@ public abstract class AbstractCommand implements CommandEntity, CommandExecutor,
                 return potentialSubCommand.get().handleTabComplete(commandSender, Arrays.copyOfRange(strings, 1, strings.length));
             }
             return abstractSubCommands.stream()
-                    .filter(subCommand -> {
-                        return subCommand.getPermission().isPresent() &&
-                                commandSender.hasPermission(subCommand.getPermission().get());
-                    })
+                    .filter(subCommand -> !subCommand.getPermission().isPresent() ||
+                            commandSender.hasPermission(subCommand.getPermission().get()))
                     .map(AbstractSubCommand::getIdentifier)
                     .filter(subCommand -> subCommand.toLowerCase().startsWith(strings[0].toLowerCase()))
                     .collect(Collectors.toList());
